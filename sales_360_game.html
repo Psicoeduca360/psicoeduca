@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360° Sales - La Revolución del Vendedor Moderno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap');
+
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2D3436;
+            --light: #F8F9FA;
+            --success: #00D4AA;
+            --danger: #FF4757;
+            --warm: #FFA502;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Header y Navegación */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            font-size: 24px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .stat-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Pantalla de Inicio */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-section {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-section h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-section p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: cardPop 0.6s ease-out backwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes cardPop {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #FF5252);
+            color: white;
+            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(78, 205, 196, 0.4);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 12px;
+        }
+
+        /* Game Screen */
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .game-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s ease;
+        }
+
+        .scenario {
+            margin-bottom: 30px;
+            animation: sceneIn 0.5s ease-out;
+        }
+
+        @keyframes sceneIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .scenario-text {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .scenario-text p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        .scenario-text strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            background: var(--light);
+            border: 2px solid transparent;
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: white;
+            transform: translateX(8px);
+        }
+
+        .option.correct {
+            background: rgba(0, 212, 170, 0.1);
+            border-color: var(--success);
+        }
+
+        .option.incorrect {
+            background: rgba(255, 71, 87, 0.1);
+            border-color: var(--danger);
+        }
+
+        .option-icon {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.success {
+            background: rgba(0, 212, 170, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .feedback.error {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        /* Leaderboard */
+        .leaderboard {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+        }
+
+        .leaderboard-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            background: white;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard-rank {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            margin-right: 20px;
+        }
+
+        .leaderboard-rank.gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .leaderboard-rank.silver {
+            background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+        }
+
+        .leaderboard-rank.bronze {
+            background: linear-gradient(135deg, #CD7F32, #B87333);
+        }
+
+        .leaderboard-info {
+            flex-grow: 1;
+        }
+
+        .leaderboard-name {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .leaderboard-score {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .leaderboard-points {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        /* Results Screen */
+        .results-container {
+            text-align: center;
+        }
+
+        .results-badge {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .results-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .result-stat {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .result-stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .result-stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .header-stats {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .game-container {
+                padding: 20px;
+            }
+
+            .results-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Particles Background */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(20px) translateX(-10px); }
+            75% { transform: translateY(-10px) translateX(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>🎯</span>
+            360° Sales Academy
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge">
+                <div class="stat-label">Nivel</div>
+                <div class="stat-value" id="userLevel">1</div>
+            </div>
+            <div class="stat-badge">
+                <div class="stat-label">Puntos</div>
+                <div class="stat-value" id="userPoints">0</div>
+            </div>
+            <div class="stat-badge">
+                <div class="stat-label">Racha</div>
+                <div class="stat-value" id="userStreak">0</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Pantalla de Inicio -->
+        <div class="screen active" id="homeScreen">
+            <div class="hero-section">
+                <h1>Bienvenido a 360° Sales</h1>
+                <p>Domina el enfoque integral de ventas modernas. Aprende, juega y crece como vendedor.</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card" onclick="startGame('fundamentals')">
+                    <div class="card-icon">📚</div>
+                    <h2>Fundamentos 360°</h2>
+                    <p>Entiende qué es el enfoque 360 en ventas y por qué es vital para el éxito moderno.</p>
+                    <button class="btn btn-primary btn-small">Jugar (10 min)</button>
+                </div>
+
+                <div class="card" onclick="startGame('human')">
+                    <div class="card-icon">👥</div>
+                    <h2>Factor Humano</h2>
+                    <p>Domina la empatía, la escucha activa y la conexión genuina con clientes.</p>
+                    <button class="btn btn-primary btn-small">Jugar (12 min)</button>
+                </div>
+
+                <div class="card" onclick="startGame('social')">
+                    <div class="card-icon">📱</div>
+                    <h2>Estrategia Social</h2>
+                    <p>Construye presencia, genera confianza y cultiva relaciones en redes sociales.</p>
+                    <button class="btn btn-primary btn-small">Jugar (15 min)</button>
+                </div>
+
+                <div class="card" onclick="startGame('context')">
+                    <div class="card-icon">🌍</div>
+                    <h2>Contexto & Proximidad</h2>
+                    <p>Aprende a ser cercano, relevante y oportuno en cada interacción.</p>
+                    <button class="btn btn-primary btn-small">Jugar (12 min)</button>
+                </div>
+
+                <div class="card" onclick="startGame('challenges')">
+                    <div class="card-icon">🚀</div>
+                    <h2>Retos Reales</h2>
+                    <p>Enfrenta situaciones auténticas de ventas y toma las mejores decisiones.</p>
+                    <button class="btn btn-primary btn-small">Jugar (20 min)</button>
+                </div>
+
+                <div class="card" onclick="showLeaderboard()">
+                    <div class="card-icon">🏆</div>
+                    <h2>Ver Ranking</h2>
+                    <p>Compite con otros vendedores y sube en el ranking global.</p>
+                    <button class="btn btn-secondary btn-small">Ver Ranking</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de Juego -->
+        <div class="screen" id="gameScreen">
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="game-title" id="gameTitle">Escenario</div>
+                    <button class="btn btn-small" onclick="goHome()">← Atrás</button>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+
+                <div class="scenario" id="scenarioContent"></div>
+                <div id="feedbackContent"></div>
+            </div>
+        </div>
+
+        <!-- Pantalla de Resultados -->
+        <div class="screen" id="resultsScreen">
+            <div class="game-container">
+                <div class="results-container">
+                    <div class="results-badge" id="resultsBadge">🎉</div>
+                    <div class="results-title" id="resultsTitle">¡Excelente!</div>
+                    
+                    <div class="results-stats">
+                        <div class="result-stat">
+                            <div class="result-stat-value" id="resultCorrect">0</div>
+                            <div class="result-stat-label">Correctas</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-value" id="resultTotal">0</div>
+                            <div class="result-stat-label">Total</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-value" id="resultPoints">0</div>
+                            <div class="result-stat-label">Puntos</div>
+                        </div>
+                    </div>
+
+                    <p id="resultsMessage" style="font-size: 16px; color: #666; margin-bottom: 30px; line-height: 1.6;"></p>
+
+                    <button class="btn btn-primary" onclick="goHome()">← Volver al Inicio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Screen -->
+        <div class="screen" id="leaderboardScreen">
+            <div class="leaderboard">
+                <h2 class="leaderboard-title">🏆 Ranking de Vendedores</h2>
+                <div class="leaderboard-list" id="leaderboardList"></div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="goHome()">← Volver al Inicio</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado del Juego
+        let gameState = {
+            currentModule: null,
+            currentQuestion: 0,
+            score: 0,
+            totalQuestions: 0,
+            userPoints: parseInt(localStorage.getItem('userPoints')) || 0,
+            userLevel: Math.floor(parseInt(localStorage.getItem('userPoints')) || 0 / 100) + 1,
+            userStreak: parseInt(localStorage.getItem('userStreak')) || 0
+        };
+
+        // Contenido de los Módulos
+        const modules = {
+            fundamentals: {
+                title: '📚 Fundamentos 360°',
+                questions: [
+                    {
+                        scenario: 'Un vendedor junior pregunta: "¿Qué significa el enfoque 360 en ventas?"',
+                        text: 'El enfoque 360° en ventas significa...',
+                        options: [
+                            { text: 'Vender de todo a todos en 360 minutos', correct: false },
+                            { text: 'Entender al cliente desde todas las perspectivas: personal, profesional, social y emocional', correct: true },
+                            { text: 'Hacer 360 llamadas de ventas por día', correct: false },
+                            { text: 'Rotar tu posición cada 360 días', correct: false }
+                        ],
+                        insight: 'El 360° es ver el cuadro completo del cliente: sus necesidades reales, sus miedos, sus aspiraciones, su contexto de vida.'
+                    },
+                    {
+                        scenario: 'Tu cliente dice: "No tengo tiempo ahora" pero notas que está de buen humor...',
+                        text: '¿Cuál es el mejor enfoque 360?',
+                        options: [
+                            { text: 'Insistir inmediatamente porque "ya está en línea"', correct: false },
+                            { text: 'Reconocer su estado emocional positivo y usarlo para construir relación sin presionar', correct: true },
+                            { text: 'Dejar de contactarlo por un mes', correct: false },
+                            { text: 'Enviarle un email genérico de seguimiento', correct: false }
+                        ],
+                        insight: 'El 360° te permite leer más allá de las palabras: ¿Cómo se siente? ¿Cuál es su situación real? ¿Qué necesita hoy?'
+                    },
+                    {
+                        scenario: 'Observas que tu cliente es emprendedor, padre de dos hijos y apasionado por el deporte.',
+                        text: '¿Cómo lo aprovechas en tu estrategia 360?',
+                        options: [
+                            { text: 'Ignorar esa información y mantener la conversación solo en lo profesional', correct: false },
+                            { text: 'Usar esa información para conectar genuinamente y ofrecerle soluciones que encajen en su vida real', correct: true },
+                            { text: 'Preguntarle sobre deporte en cada llamada para no sonar robótico', correct: false },
+                            { text: 'Compartir tu información personal primero', correct: false }
+                        ],
+                        insight: 'El contexto personal hace la venta más cercana. Cuando el cliente siente que lo ves como persona completa, baja la guardia.'
+                    }
+                ]
+            },
+            human: {
+                title: '👥 Factor Humano',
+                questions: [
+                    {
+                        scenario: 'Tu cliente te comparte que acaba de vivir un rechazo importante en su empresa. Está desmotivado.',
+                        text: '¿Cuál es tu mejor movimiento 360?',
+                        options: [
+                            { text: 'Cambiar el tema y enfocarte en la venta rápido', correct: false },
+                            { text: 'Escucharlo genuinamente, validar sus sentimientos y luego ofrecer cómo tu solución lo apoyará', correct: true },
+                            { text: 'Ignorar lo que dijo y continuar con tu pitch', correct: false },
+                            { text: 'Decirle "superarás esto" y pasar a los números', correct: false }
+                        ],
+                        insight: 'La empatía real abre puertas. Cuando un cliente siente que genuinamente te importa, la probabilidad de venta aumenta 5x.'
+                    },
+                    {
+                        scenario: 'Durante la llamada, tu cliente menciona casualmente que "confía más en vendedores que lo conocen de verdad".',
+                        text: '¿Qué debería ser tu prioridad ahora?',
+                        options: [
+                            { text: 'Ignorar ese comentario y enfocarte en características del producto', correct: false },
+                            { text: 'Usar eso como señal para invertir en conocer mejor al cliente más allá de la transacción', correct: true },
+                            { text: 'Presionar para cerrar antes de que se arrepiente', correct: false },
+                            { text: 'Decirle que confíe "porque eres profesional"', correct: false }
+                        ],
+                        insight: 'La confianza es la moneda más valiosa. Se construye lentamente con coherencia, transparencia y genuino interés.'
+                    },
+                    {
+                        scenario: 'Tu cliente está indeciso. Notas que teme cometer un error en la decisión.',
+                        text: '¿Cómo lo manejas con el factor humano?',
+                        options: [
+                            { text: 'Minimizar su miedo diciéndole que es una decisión "obvia"', correct: false },
+                            { text: 'Validar su miedo, explicar qué pasaría si no actúa y mostrar cómo vosotros los apoyarán después', correct: true },
+                            { text: 'Usar presión de tiempo para que decida rápido', correct: false },
+                            { text: 'Ofrecerle un descuento para que deje de pensar', correct: false }
+                        ],
+                        insight: 'Detrás de cada objeción hay una emoción. Tu trabajo es entenderla y transformar el miedo en confianza.'
+                    }
+                ]
+            },
+            social: {
+                title: '📱 Estrategia Social',
+                questions: [
+                    {
+                        scenario: 'Tu cliente potencial te sigue en LinkedIn pero nunca ha interactuado con tus posts.',
+                        text: '¿Cuál es el enfoque 360 en redes?',
+                        options: [
+                            { text: 'Enviarle un mensaje privado agresivo pidiendo una reunión', correct: false },
+                            { text: 'Interactuar genuinamente con su contenido, agregar valor y construir relación a través de comentarios inteligentes', correct: true },
+                            { text: 'Ignorarlo porque aún no es "prospect calificado"', correct: false },
+                            { text: 'Publicar contenido genérico esperando que reaccione', correct: false }
+                        ],
+                        insight: 'Las redes son espacios de relación, no máquinas de venta. La interacción genuina precede a la oportunidad.'
+                    },
+                    {
+                        scenario: 'Estás publicando contenido de ventas en redes pero notas que nadie interactúa.',
+                        text: '¿Qué falta en tu estrategia 360?',
+                        options: [
+                            { text: 'Publicar más frecuentemente lo mismo', correct: false },
+                            { text: 'Interactuar primero con otros, mostrar tu personalidad y educación antes de vender', correct: true },
+                            { text: 'Cambiar a publicidad pagada inmediatamente', correct: false },
+                            { text: 'Dejar de usar redes para ventas', correct: false }
+                        ],
+                        insight: 'La presencia social es un juego de largo plazo. Primero das valor, construyes comunidad, luego vendes naturalmente.'
+                    },
+                    {
+                        scenario: 'Un cliente potencial comenta negativamente en uno de tus posts sobre un problema con tu producto.',
+                        text: '¿Tu respuesta 360?',
+                        options: [
+                            { text: 'Ignorar el comentario o defenderlo agresivamente', correct: false },
+                            { text: 'Responder empáticamente, reconocer el problema y ofrecer solucionarlo en privado', correct: true },
+                            { text: 'Eliminar el comentario inmediatamente', correct: false },
+                            { text: 'Responder con un descuento para que calle', correct: false }
+                        ],
+                        insight: 'Los conflictos públicos son oportunidades. Cuando manejas críticas con madurez, ganas la confianza de toda la audiencia.'
+                    }
+                ]
+            },
+            context: {
+                title: '🌍 Contexto & Proximidad',
+                questions: [
+                    {
+                        scenario: 'Tu cliente está en una zona horaria diferente y sientes que está cansado en las llamadas.',
+                        text: '¿Enfoque 360 para ser cercano?',
+                        options: [
+                            { text: 'Mantener siempre a la misma hora porque es lo planificado', correct: false },
+                            { text: 'Ajustar la hora a su comodidad, reconocer que las personas tienen ritmos de energía diferentes', correct: true },
+                            { text: 'Hacer las reuniones más cortas para no "molestarlo"', correct: false },
+                            { text: 'Cambiar a comunicación por email solamente', correct: false }
+                        ],
+                        insight: 'La proximidad también es temporal. Ser considerate con el tiempo del cliente es ser cercano de verdad.'
+                    },
+                    {
+                        scenario: 'Sabes que tu cliente pasó por un cambio importante en su empresa hace poco.',
+                        text: '¿Cómo lo consideras en tu contexto 360?',
+                        options: [
+                            { text: 'Ignorarlo, es un tema personal', correct: false },
+                            { text: 'Reconocerlo en tu primer contacto, mostrar que investigaste y que entiendes que podría estar en transición', correct: true },
+                            { text: 'Presionar para vender porque seguro tiene presupuesto nuevo', correct: false },
+                            { text: 'Esperar a que el cliente mencione el cambio primero', correct: false }
+                        ],
+                        insight: 'El contexto empresarial da claridad. Cuando entiendes el escenario del cliente, tus propuestas son 10x más relevantes.'
+                    },
+                    {
+                        scenario: 'Tu vendedor junior pregunta: "¿Es importante saber el nombre de la pareja del cliente?"',
+                        text: '¿Tu respuesta 360?',
+                        options: [
+                            { text: 'No, eso es puro networking, no ventas', correct: false },
+                            { text: 'Sí, porque la vida del cliente es un sistema: su estabilidad personal impacta sus decisiones profesionales', correct: true },
+                            { text: 'Solo si es necesario para la venta', correct: false },
+                            { text: 'No, deberíamos mantener distancia profesional', correct: false }
+                        ],
+                        insight: 'El 360 significa entender que la persona no es divisible. Su bienestar personal y profesional están conectados.'
+                    }
+                ]
+            },
+            challenges: {
+                title: '🚀 Retos Reales',
+                questions: [
+                    {
+                        scenario: 'Llevas 3 meses siendo amable y cercano con un cliente. De repente dice: "Vamos con tu competidor porque ofrecen menos precio."',
+                        text: '¿Tu respuesta 360?',
+                        options: [
+                            { text: 'Bajar tu precio automáticamente para competir', correct: false },
+                            { text: 'Reconocer sus presupuesto limitado, recordarle el valor que construimos, ofrecerle opciones creativas y dejarle ir dignamente si eso es lo mejor para él', correct: true },
+                            { text: 'Criticar a la competencia', correct: false },
+                            { text: 'Presionarlo diciéndole que cometará un error', correct: false }
+                        ],
+                        insight: 'El vendedor 360 entiende que no todas las ventas son para él, y eso lo hace más respetable y referenciable.'
+                    },
+                    {
+                        scenario: 'Tu cliente te dice: "Eres muy buen vendedor, pero tu producto no es lo que necesitamos realmente."',
+                        text: '¿Tu movimiento 360?',
+                        options: [
+                            { text: 'Intentar convencerlo de que sí lo necesita', correct: false },
+                            { text: 'Escuchar realmente qué necesita, quizás sugerirle una alternativa mejor (incluso de otro proveedor) y ganarte un referenciador de por vida', correct: true },
+                            { text: 'Desaparecer sin despedida', correct: false },
+                            { text: 'Dejar dinero en la mesa e insistir', correct: false }
+                        ],
+                        insight: 'El vendedor 360 pone al cliente primero. Eso suena contraproducente pero es lo que genera reputación y referencias.'
+                    },
+                    {
+                        scenario: 'Dos clientes solicitan lo mismo, pero solo puedes atender a uno bien ahora.',
+                        text: '¿Tu estrategia 360?',
+                        options: [
+                            { text: 'Prometer a ambos lo mismo sin poder cumplir', correct: false },
+                            { text: 'Ser honesto con ambos, enfocarte en quien más claramente necesita tu ayuda, y comprometerte con el otro que lo atenderás bien después', correct: true },
+                            { text: 'Delegar a alguien menos capacitado', correct: false },
+                            { text: 'Desapareciendo de ambos por un tiempo', correct: false }
+                        ],
+                        insight: 'La integridad en momentos de presión es lo que marca la diferencia entre un vendedor bueno y un vendedor transformacional.'
+                    }
+                ]
+            }
+        };
+
+        // Leaderboard Data
+        const leaderboardData = [
+            { rank: 1, name: 'Carlos Mendoza', score: 4200, streak: 28 },
+            { rank: 2, name: 'María López', score: 3850, streak: 22 },
+            { rank: 3, name: 'Juan Rodríguez', score: 3600, streak: 18 },
+            { rank: 4, name: 'Ana Martínez', score: 3200, streak: 15 },
+            { rank: 5, name: 'David García', score: 2950, streak: 12 },
+            { rank: 6, name: 'TÚ', score: gameState.userPoints, streak: gameState.userStreak }
+        ];
+
+        // Funciones Principales
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function startGame(module) {
+            gameState.currentModule = module;
+            gameState.currentQuestion = 0;
+            gameState.score = 0;
+            gameState.totalQuestions = modules[module].questions.length;
+            
+            document.getElementById('gameTitle').textContent = modules[module].title;
+            switchScreen('gameScreen');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const module = modules[gameState.currentModule];
+            const question = module.questions[gameState.currentQuestion];
+            const progress = ((gameState.currentQuestion) / gameState.totalQuestions) * 100;
+
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            let optionsHTML = '<div class="options">';
+            question.options.forEach((option, index) => {
+                optionsHTML += `
+                    <div class="option" onclick="selectOption(${index})">
+                        <span class="option-icon">○</span>
+                        ${option.text}
+                    </div>
+                `;
+            });
+            optionsHTML += '</div>';
+
+            document.getElementById('scenarioContent').innerHTML = `
+                <div class="scenario-text">
+                    <p><strong>Escenario ${gameState.currentQuestion + 1}/${gameState.totalQuestions}:</strong></p>
+                    <p>${question.scenario}</p>
+                    <p style="margin-top: 15px; font-weight: 600; color: var(--primary);">${question.text}</p>
+                </div>
+                ${optionsHTML}
+            `;
+
+            document.getElementById('feedbackContent').innerHTML = '';
+        }
+
+        function selectOption(index) {
+            const module = modules[gameState.currentModule];
+            const question = module.questions[gameState.currentQuestion];
+            const option = question.options[index];
+
+            // Desactivar todas las opciones
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            // Marcar opciones
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                if (i === index) {
+                    opt.classList.add(option.correct ? 'correct' : 'incorrect');
+                }
+                if (question.options[i].correct) {
+                    opt.classList.add('correct');
+                }
+            });
+
+            // Mostrar feedback
+            let feedbackClass = option.correct ? 'success' : 'error';
+            let feedbackIcon = option.correct ? '✅' : '❌';
+            let feedbackTitle = option.correct ? '¡Correcto!' : 'Intenta de nuevo';
+
+            if (option.correct) {
+                gameState.score++;
+                gameState.userPoints += 25;
+                gameState.userStreak++;
+                if (gameState.userStreak % 5 === 0) {
+                    gameState.userPoints += 50; // Bonus
+                }
+            } else {
+                gameState.userStreak = 0;
+            }
+
+            updateHeader();
+            localStorage.setItem('userPoints', gameState.userPoints);
+            localStorage.setItem('userStreak', gameState.userStreak);
+
+            let feedbackHTML = `
+                <div class="feedback ${feedbackClass}">
+                    <strong>${feedbackIcon} ${feedbackTitle}</strong>
+                    <p style="margin-top: 10px;">${question.insight}</p>
+            `;
+
+            if (gameState.currentQuestion < gameState.totalQuestions - 1) {
+                feedbackHTML += `<button class="btn btn-primary" onclick="nextQuestion()" style="margin-top: 15px;">Siguiente →</button>`;
+            } else {
+                feedbackHTML += `<button class="btn btn-primary" onclick="showResults()" style="margin-top: 15px;">Ver Resultados →</button>`;
+            }
+
+            feedbackHTML += '</div>';
+            document.getElementById('feedbackContent').innerHTML = feedbackHTML;
+        }
+
+        function nextQuestion() {
+            gameState.currentQuestion++;
+            showQuestion();
+        }
+
+        function showResults() {
+            const correctPercentage = Math.round((gameState.score / gameState.totalQuestions) * 100);
+            const pointsEarned = gameState.score * 25;
+
+            let badge = '🎉';
+            let title = '¡Excelente!';
+            let message = '';
+
+            if (correctPercentage === 100) {
+                badge = '🏆';
+                title = '¡PERFECTO! ¡Eres un Maestro 360°!';
+                message = 'Has respondido todas las preguntas correctamente. Tu comprensión del enfoque 360 es excepcional. Sigue así y serás una leyenda en ventas.';
+            } else if (correctPercentage >= 80) {
+                badge = '⭐';
+                title = '¡Muy Bien!';
+                message = 'Demostraste excelente comprensión del módulo. Hay detalles para afinar, pero tu mentalidad 360 es sólida.';
+            } else if (correctPercentage >= 60) {
+                badge = '👍';
+                title = 'Buen Inicio';
+                message = 'Estás en el camino correcto. Repasa los conceptos y vuelve a intentarlo. Cada intento te acerca a la maestría.';
+            } else {
+                badge = '💪';
+                title = 'Sigue Aprendiendo';
+                message = 'Este módulo requiere más práctica. No te desanimes, los mejores vendedores son estudiantes de por vida. Inténtalo de nuevo.';
+            }
+
+            document.getElementById('resultsBadge').textContent = badge;
+            document.getElementById('resultsTitle').textContent = title;
+            document.getElementById('resultCorrect').textContent = gameState.score;
+            document.getElementById('resultTotal').textContent = gameState.totalQuestions;
+            document.getElementById('resultPoints').textContent = pointsEarned;
+            document.getElementById('resultsMessage').textContent = message;
+
+            switchScreen('resultsScreen');
+        }
+
+        function showLeaderboard() {
+            let leaderboardHTML = '';
+            leaderboardData.forEach((item, index) => {
+                let rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : '';
+                leaderboardHTML += `
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank ${rankClass}">${item.rank}</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">${item.name}</div>
+                            <div class="leaderboard-score">Racha: ${item.streak} 🔥</div>
+                        </div>
+                        <div class="leaderboard-points">${item.score} pts</div>
+                    </div>
+                `;
+            });
+            document.getElementById('leaderboardList').innerHTML = leaderboardHTML;
+            switchScreen('leaderboardScreen');
+        }
+
+        function updateHeader() {
+            document.getElementById('userPoints').textContent = gameState.userPoints;
+            document.getElementById('userLevel').textContent = Math.floor(gameState.userPoints / 100) + 1;
+            document.getElementById('userStreak').textContent = gameState.userStreak;
+        }
+
+        function goHome() {
+            switchScreen('homeScreen');
+        }
+
+        // Inicializar
+        updateHeader();
+    </script>
+</body>
+</html>

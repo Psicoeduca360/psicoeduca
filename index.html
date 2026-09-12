@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psicoeduca Academy - Formación para Docentes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="parallax-bg" class="parallax-bg">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
+    <div id="app">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <i class="ph ph-graduation-cap"></i>
+                <span style="font-size: 20px;">Psicoeduca Academy</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#home" class="nav-link active" data-target="home"><i class="ph ph-squares-four"></i> Inicio</a>
+                <a href="#news" class="nav-link" data-target="news">
+                    <i class="ph ph-newspaper"></i> Noticias
+                    <span class="nav-badge">Nuevo</span>
+                </a>
+                <a href="#history" class="nav-link" data-target="history"><i class="ph ph-scroll"></i> Historia</a>
+                <a href="#courses" class="nav-link" data-target="courses"><i class="ph ph-books"></i> Cursos</a>
+                <a href="#tests" class="nav-link" data-target="tests"><i class="ph ph-exam"></i> Tests</a>
+                <a href="#videos" class="nav-link" data-target="videos"><i class="ph ph-video"></i> Videos</a>
+                <a href="#gamification" class="nav-link" data-target="gamification"><i class="ph ph-game-controller"></i> Aprende Jugando</a>
+                <a href="#community" class="nav-link" data-target="community"><i class="ph ph-users-three"></i> Comunidad</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile" id="user-profile-container" onclick="app.navigate('profile')">
+                    <img id="user-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Novato" alt="Perfil">
+                    <div class="profile-info">
+                        <span id="user-name-display" style="display: block; line-height: 1.2;">Docente</span>
+                        <small id="sidebar-level" style="display: block; color: var(--text-secondary); font-size: 11px; margin-top: 2px;">Docente Novato</small>
+                        <small id="sidebar-xp" style="color: var(--primary); font-size: 12px; font-weight: 600;">XP: 1450</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-bar" style="position: relative;">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" placeholder="Buscar cursos, tests, historia..." onkeyup="app.searchApp(this.value)">
+                    <div id="search-results" style="display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; max-height: 400px; overflow-y: auto;"></div>
+                </div>
+                <div class="topbar-actions" style="position: relative;">
+                    <div class="level-badge" id="topbar-level"><i class="ph-fill ph-star"></i> Docente Novato</div>
+                    
+                    <button class="icon-btn" onclick="app.navigate('news')" style="position: relative;">
+                        <i class="ph ph-bell"></i>
+                        <span class="notification-badge"></span>
+                    </button>
+                    
+                    <button class="icon-btn" onclick="app.toggleThemeMenu()" title="Temas Visuales"><i class="ph ph-gear"></i></button>
+                    <button class="icon-btn" onclick="app.logoutUser()" title="Cerrar Sesión / Cambiar Usuario"><i class="ph ph-sign-out"></i></button>
+                    
+                    <div id="theme-menu" style="display: none; position: absolute; top: 100%; right: 0; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; width: 220px;">
+                        <h4 style="margin-bottom: 15px; font-size: 14px; color: var(--text-secondary); text-transform: uppercase; font-weight: 800; letter-spacing: 1px;">Temas Visuales</h4>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <button onclick="app.changeTheme('default')" style="background: none; border: none; color: white; display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 10px; border-radius: 8px; transition: var(--transition); width: 100%; text-align: left; font-family: var(--font-main);" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background: #93C5FD; border: 2px solid #3B82F6;"></div> Azul Clásico
+                            </button>
+                            <button onclick="app.changeTheme('neon')" style="background: none; border: none; color: white; display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 10px; border-radius: 8px; transition: var(--transition); width: 100%; text-align: left; font-family: var(--font-main);" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background: #C084FC; border: 2px solid #9333EA;"></div> Púrpura Neón
+                            </button>
+                            <button onclick="app.changeTheme('forest')" style="background: none; border: none; color: white; display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 10px; border-radius: 8px; transition: var(--transition); width: 100%; text-align: left; font-family: var(--font-main);" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background: #4ADE80; border: 2px solid #16A34A;"></div> Verde Esmeralda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area" id="content-area"></div>
+        </main>
+    </div>
+
+    <!-- Modal de Login / Registro con Clave (Opcional - No bloqueante) -->
+    <div id="login-modal" class="modal-overlay" style="display: none; align-items: center; justify-content: center; z-index: 2000;">
+        <div style="background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 40px; width: 90%; max-width: 440px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); backdrop-filter: blur(16px); text-align: center;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 0 25px rgba(13, 138, 188, 0.4);">
+                <i class="ph-bold ph-graduation-cap" style="font-size: 36px; color: var(--bg-dark);"></i>
+            </div>
+            <h2 style="font-size: 26px; margin-bottom: 8px; font-weight: 800;">Psicoeduca Academy</h2>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 30px;">Ingresa tu nombre o usuario para identificar tu perfil y guardar tu progreso.</p>
+            
+            <form onsubmit="app.handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Nombre Completo o Usuario</label>
+                    <input type="text" id="login-username" placeholder="Ej: Profe María Rodríguez" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); color: white; padding: 14px 16px; border-radius: 12px; font-size: 15px; font-family: 'Outfit', sans-serif;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Contraseña (Opcional)</label>
+                    <input type="password" id="login-password" placeholder="•••••••• (Opcional)" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); color: white; padding: 14px 16px; border-radius: 12px; font-size: 15px; font-family: 'Outfit', sans-serif;">
+                </div>
+                <div id="login-error" style="color: var(--error); font-size: 13px; display: none; margin-top: 4px;"></div>
+                <button type="submit" class="hero-btn" style="width: 100%; margin-top: 10px; padding: 14px; font-size: 16px; justify-content: center;">
+                    Entrar a la Plataforma <i class="ph-bold ph-arrow-right"></i>
+                </button>
+            </form>
+            
+            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 12px; color: var(--text-secondary); display: flex; justify-content: space-between; align-items: center;">
+                <span><i class="ph ph-shield-check" style="color: var(--success);"></i> Acceso libre y guardado local.</span>
+                <button onclick="document.getElementById('login-modal').style.display='none'" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; text-decoration: underline; font-size: 12px;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificado Modal -->
+    <div id="certificate-modal" class="modal-overlay" style="display: none;"></div>
+
+    <!-- Chatbot Asistente -->
+    <div id="chatbot-wrapper" class="chatbot-wrapper">
+        <button class="chatbot-fab" onclick="app.toggleChatbot()">
+            <i class="ph-bold ph-robot"></i>
+        </button>
+        <div id="chatbot-window" class="chatbot-window" style="display: none;">
+            <div class="chatbot-header">
+                <div><i class="ph-fill ph-robot"></i> Elprofe (Asistente Interno)</div>
+                <button class="icon-btn" onclick="app.toggleChatbot()"><i class="ph ph-x"></i></button>
+            </div>
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="chat-msg bot-msg">¡Hola! Soy <b>Elprofe</b>, tu asistente pedagógico oficial. Conozco todo sobre DUA, Constructivismo, Neuromitos, Cursos y Evaluaciones de Psicoeduca Academy. ¿En qué te puedo orientar hoy?</div>
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" placeholder="Pregunta sobre DUA, pedagogía, cursos..." onkeypress="if(event.key==='Enter') app.sendChatMessage()">
+                <button onclick="app.sendChatMessage()"><i class="ph-bold ph-paper-plane-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+</body>
+</html>

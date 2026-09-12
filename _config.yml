@@ -1,0 +1,14 @@
+# Configuración de Jekyll para GitHub Pages
+title: Psicoeduca Academy
+description: Plataforma Formativa e Interactiva para Docentes
+
+# Incluir explícitamente las carpetas estáticas
+include:
+  - css
+  - js
+  - assets
+  - modules
+
+# Desactivar plugins que puedan alterar los archivos HTML/JS estáticos
+plugins:
+  - jekyll-feed

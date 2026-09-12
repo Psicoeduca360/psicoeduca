@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía: TikTok y el Microaprendizaje</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --card: #1a1a26;
+    --accent1: #00f2fe; /* TikTok Cyan */
+    --accent2: #ff0050; /* TikTok Pink */
+    --accent3: #ffcb47;
+    --accent4: #7c4dff;
+    --accent5: #ff7043;
+    --accent6: #29b6f6;
+    --accent7: #66bb6a;
+    --text: #f0f0f8;
+    --muted: #7878a0;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 48px 40px 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,242,254,0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: 80px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,0,80,0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .series-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,242,254,0.12);
+    border: 1px solid rgba(0,242,254,0.3);
+    color: var(--accent1);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 18px;
+  }
+  .series-badge span { font-size: 14px; }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent2);
+  }
+  .header-sub {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 580px;
+    line-height: 1.6;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+  .meta-pill b { color: var(--text); }
+
+  /* EPISODE GRID */
+  .episodes-container {
+    padding: 40px;
+    padding-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .episode-block {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  /* EPISODE CARD LEFT */
+  .ep-card {
+    border-radius: 20px;
+    padding: 28px;
+    position: sticky;
+    top: 24px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    overflow: hidden;
+  }
+  .ep-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .ep-1 .ep-card::before { background: var(--accent1); }
+  .ep-2 .ep-card::before { background: var(--accent2); }
+  .ep-3 .ep-card::before { background: var(--accent3); }
+  .ep-4 .ep-card::before { background: var(--accent4); }
+  .ep-5 .ep-card::before { background: var(--accent5); }
+  .ep-6 .ep-card::before { background: var(--accent6); }
+  .ep-7 .ep-card::before { background: var(--accent7); }
+
+  .ep-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.5;
+  }
+  .ep-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .ep-age-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+  }
+  .ep-1 .ep-age-badge { background: rgba(0,242,254,0.15); color: var(--accent1); }
+  .ep-2 .ep-age-badge { background: rgba(255,0,80,0.15); color: var(--accent2); }
+  .ep-3 .ep-age-badge { background: rgba(255,203,71,0.15); color: var(--accent3); }
+  .ep-4 .ep-age-badge { background: rgba(124,77,255,0.15); color: var(--accent4); }
+  .ep-5 .ep-age-badge { background: rgba(255,112,67,0.15); color: var(--accent5); }
+  .ep-6 .ep-age-badge { background: rgba(41,182,246,0.15); color: var(--accent6); }
+  .ep-7 .ep-age-badge { background: rgba(102,187,106,0.15); color: var(--accent7); }
+
+  .ep-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .ep-tiktok-desc {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+  .ep-tiktok-desc-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .ep-tiktok-desc p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  /* SLIDES RIGHT */
+  .ep-slides {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .slide-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+  .slide-item:hover { border-color: rgba(255,255,255,0.15); }
+
+  .slide-number-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .slide-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+  }
+  .ep-1 .slide-num { color: var(--accent1); }
+  .ep-2 .slide-num { color: var(--accent2); }
+  .ep-3 .slide-num { color: var(--accent3); }
+  .ep-4 .slide-num { color: var(--accent4); }
+  .ep-5 .slide-num { color: var(--accent5); }
+  .ep-6 .slide-num { color: var(--accent6); }
+  .ep-7 .slide-num { color: var(--accent7); }
+
+  .slide-role {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+  }
+  .slide-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .slide-content {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .slide-content ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .slide-content ul li::before {
+    content: '→ ';
+    opacity: 0.5;
+  }
+
+  /* VISUAL SUGGESTION */
+  .slide-visual {
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+  }
+  .visual-mockup {
+    border-radius: 12px;
+    padding: 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 130px;
+    position: relative;
+    overflow: hidden;
+  }
+  .visual-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 8px;
+  }
+  .visual-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+  }
+  .visual-sub {
+    font-size: 10px;
+    opacity: 0.7;
+    line-height: 1.4;
+    margin-top: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .visual-deco {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    opacity: 0.06;
+    right: -10px;
+    bottom: -15px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* DIVIDER */
+  .series-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 40px;
+  }
+
+  /* OVERVIEW NAV */
+  .series-nav {
+    display: flex;
+    gap: 10px;
+    padding: 20px 40px;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-ep {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    transition: all 0.2s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-ep:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .nav-ep.n1:hover { border-color: var(--accent1); color: var(--accent1); }
+  .nav-ep.n2:hover { border-color: var(--accent2); color: var(--accent2); }
+  .nav-ep.n3:hover { border-color: var(--accent3); color: var(--accent3); }
+  .nav-ep.n4:hover { border-color: var(--accent4); color: var(--accent4); }
+
+  @media (max-width: 900px) {
+    .episode-block { grid-template-columns: 1fr; }
+    .ep-card { position: static; }
+    .slide-item { grid-template-columns: 1fr; }
+    .episodes-container { padding: 20px; }
+    .header { padding: 30px 20px 24px; }
+    .series-nav { padding: 16px 20px; }
+    .series-divider { margin: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="series-badge"><span>🧠</span> Guía Pedagógica — Alfabetización Digital</div>
+  <h1>El Potencial Educativo de TikTok:<br><em>Pedagogía y Microaprendizaje</em></h1>
+  <p class="header-sub">No se trata de crear contenido ni grabar videos, sino de entender cómo aprenden tus alumnos hoy. Un análisis profundo del impacto cognitivo y pedagógico del formato corto.</p>
+  <div class="header-meta">
+    <div class="meta-pill">🧠 <b>Enfoque</b> · Neuroeducación y Pedagogía</div>
+    <div class="meta-pill">📚 <b>Módulos</b> · 4 Capítulos Clave</div>
+    <div class="meta-pill">🎯 <b>Objetivo</b> · Alfabetización Digital Crítica</div>
+  </div>
+</header>
+
+<nav class="series-nav">
+  <a href="#ep1" class="nav-ep n1">Cap.1 · El Paradigma del Microaprendizaje</a>
+  <a href="#ep2" class="nav-ep n2">Cap.2 · Atención y Carga Cognitiva</a>
+  <a href="#ep3" class="nav-ep n3">Cap.3 · Alfabetización y Pensamiento Crítico</a>
+  <a href="#ep4" class="nav-ep n4">Cap.4 · Consumo Activo e Investigación</a>
+</nav>
+
+<div class="episodes-container">
+
+  <!-- CAPITULO 1 -->
+  <div class="episode-block ep-1" id="ep1">
+    <div class="ep-card">
+      <div class="ep-number">Capítulo 01 / 04</div>
+      <div class="ep-title">El Paradigma del Microaprendizaje</div>
+      <div class="ep-age-badge">🧠 Teoría Pedagógica</div>
+      <p class="ep-desc">¿Por qué el formato corto es tan efectivo para captar conceptos iniciales? Entendamos la psicología detrás de los 60 segundos.</p>
+      <div class="ep-tiktok-desc">
+        <div class="ep-tiktok-desc-label">Reflexión Docente</div>
+        <p>El aprendizaje no siempre debe ser extenso para ser profundo. El microaprendizaje actúa como un ancla cognitiva que despierta la curiosidad para investigaciones mayores.</p>
+      </div>
+    </div>
+
+    <div class="ep-slides">
+
+      <div class="slide-item">
+        <div class="slide-left">
+          <div class="slide-number-row"><span class="slide-num">01</span><span class="slide-role">Concepto Base</span></div>
+          <div class="slide-title">¿Qué es el Microlearning?</div>
+          <div class="slide-content"><ul><li>Estrategia educativa que divide información compleja en píldoras breves (1-3 min).</li><li>Facilita la asimilación al enfocarse en un solo objetivo o concepto a la vez.</li><li>Es el equivalente digital de las "tarjetas de estudio" o flashcards.</li></ul></div>
+        </div>
+        <div class="slide-visual">
+          <div class="visual-mockup" style="background: linear-gradient(135deg, #00f2fe22, #00f2fe08); border: 1px solid rgba(0,242,254,0.2);">
+            <div class="visual-label">Foco Cognitivo</div>
+            <div class="visual-headline">MENOS ES MÁS</div>
+            <div class="visual-sub">Reducir el ruido, aumentar el impacto de la idea central.</div>
+            <div class="visual-deco">🧩</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <div class="slide-left">
+          <div class="slide-number-row"><span class="slide-num">02</span><span class="slide-role">Aplicación</span></div>
+          <div class="slide-title">El rol del docente moderno</div>
+          <div class="slide-content"><ul><li>No necesitamos ser "creadores de contenido".</li><li>Nuestro rol es ayudar al alumno a conectar esos micro-conceptos dispersos.</li><li>El video de 60s es la "chispa", la clase presencial es la "hoguera".</li></ul></div>
+        </div>
+        <div class="slide-visual">
+          <div class="visual-mockup" style="background: linear-gradient(135deg, #1a1a26, #13131a); border: 1px solid rgba(0,242,254,0.15);">
+            <div class="visual-label">Rol Docente</div>
+            <div class="visual-headline">CURADORES DE SENTIDO</div>
+            <div class="visual-sub">Conectando los puntos de información aislada.</div>
+            <div class="visual-deco">🔗</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="series-divider"></div>
+
+  <!-- CAPITULO 2 -->
+  <div class="episode-block ep-2" id="ep2">
+    <div class="ep-card">
+      <div class="ep-number">Capítulo 02 / 04</div>
+      <div class="ep-title">Atención y Carga Cognitiva</div>
+      <div class="ep-age-badge">👁️ Neuroeducación</div>
+      <p class="ep-desc">Analizamos la economía de la atención. ¿Destruye TikTok la capacidad de concentración o simplemente requiere un enfoque diferente?</p>
+      <div class="ep-tiktok-desc">
+        <div class="ep-tiktok-desc-label">Reflexión Docente</div>
+        <p>Los estudiantes no tienen "déficit de atención", tienen una alta selectividad de atención debido a la abundancia de estímulos. Si no hay relevancia, desconectan.</p>
+      </div>
+    </div>
+
+    <div class="ep-slides">
+
+      <div class="slide-item">
+        <div class="slide-left">
+          <div class="slide-number-row"><span class="slide-num">01</span><span class="slide-role">Teoría</span></div>
+          <div class="slide-title">La Teoría de la Carga Cognitiva (Sweller)</div>
+          <div class="slide-content"><ul><li>Nuestra memoria de trabajo es limitada (procesa poca información simultánea).</li><li>Los videos muy recargados (audio + texto en movimiento) saturan la memoria.</li><li>Un buen uso de este formato simplifica el modelo visual.</li></ul></div>
+        </div>
+        <div class="slide-visual">
+          <div class="visual-mockup" style="background: linear-gradient(135deg, #ff005022, #ff005008); border: 1px solid rgba(255,0,80,0.2);">
+            <div class="visual-label">Peligro Pedagógico</div>
+            <div class="visual-headline">SOBRECARGA COGNITIVA</div>
+            <div class="visual-sub">Muchos estímulos impiden la retención a largo plazo.</div>
+            <div class="visual-deco">🧠</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <div class="slide-left">
+          <div class="slide-number-row"><span class="slide-num">02</span><span class="slide-role">Oportunidad</span></div>
+          <div class="slide-title">Economía de la Atención</div>
+          <div class="slide-content"><ul><li>El diseño de estas plataformas entrena el cerebro para recompensas inmediatas.</li><li>Como educadores, podemos utilizar esa mecánica inicial para plantear un "conflicto cognitivo".</li><li>Ej: Romper un mito en los primeros 3 segundos genera curiosidad para investigar más.</li></ul></div>
+        </div>
+        <div class="slide-visual">
+          <div class="visual-mockup" style="background: linear-gradient(135deg, #ff005015, #1a1a26); border: 1px solid rgba(255,0,80,0.15);">
+            <div class="visual-label">Estrategia</div>
+            <div class="visual-headline">EL CONFLICTO COGNITIVO</div>
+            <div class="visual-sub">Provocar disonancia para generar curiosidad auténtica.</div>
+            <div class="visual-deco">⚡</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="series-divider"></div>
+
+  <!-- CAPITULO 3 -->
+  <div class="episode-block ep-3" id="ep3">
+    <div class="ep-card">
+      <div class="ep-number">Capítulo 03 / 04</div>
+      <div class="ep-title">Alfabetización y Pensamiento Crítico</div>
+      <div class="ep-age-badge">🛡️ Ciudadanía Digital</div>
+      <p class="ep-desc">Cómo enseñar a los estudiantes a dudar de lo que ven, verificar fuentes y no caer en la desinformación de consumo rápido.</p>
+      <div class="ep-tiktok-desc">
+        <div class="ep-tiktok-desc-label">Reflexión Docente</div>
+        <p>La habilidad más importante del siglo XXI no es encontrar información, sino saber filtrarla y verificar su veracidad científica o histórica.</p>
+      </div>
+    </div>
+
+    <div class="ep-slides">
+
+      <div class="slide-item">
+        <div class="slide-left">
+          <div class="slide-number-row"><span class="slide-num">01</span><span class="slide-role">El Problema</span></div>
+          <div class="slide-title">La ilusión de la autoridad</div>
+          <div class="slide-content"><ul><li>Un video bien editado o un presentador seguro genera confianza inmediata (Sesgo de autoridad).</li><li>Muchos "factos" históricos o científicos en formato corto carecen de matices.</li><li>Es vital enseñar a pausar el "scroll" y cuestionar la fuente.</li></ul></div>
+        </div>
+        <div class="slide-visual">
+          <div class="visual-mockup" style="background: linear-gradient(135deg, #ffcb4722, #ffcb4708); border: 1px solid rgba(255,203,71,0.2);">
+            <div class="visual-label">Sesgo Cognitivo</div>
+            <div class="visual-headline">EL SESGO DE AUTORIDAD VISUAL</div>
+            <div class="visual-sub">Creerle a alguien solo porque "habla con seguridad".</div>
+            <div class="visual-deco">🎭</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <div class="slide-left">
+          <div class="slide-number-row"><span class="slide-num">02</span><span class="slide-role">Práctica en Aula</span></div>
+          <div class="slide-title">Dinámica de "Cazadores de Mitos"</div>
+          <div class="slide-content"><ul><li>Lleva un video educativo popular (y dudoso) al aula.</li><li>Divide a la clase en grupos y pídeles que busquen evidencia que refute el video.</li><li>Esto desarrolla inmunidad intelectual contra la desinformación.</li></ul></div>
+        </div>
+        <div class="slide-visual">
+          <div class="visual-mockup" style="background: linear-gradient(135deg, #ffcb4715, #1a1a26); border: 1px solid rgba(255,203,71,0.15);">
+            <div class="visual-label">Metodología</div>
+            <div class="visual-headline">CAZADORES DE MITOS DIGITALES</div>
+            <div class="visual-sub">Transformar el consumo pasivo en investigación activa.</div>
+            <div class="visual-deco">🔍</div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="series-divider"></div>
+
+  <!-- CAPITULO 4 -->
+  <div class="episode-block ep-4" id="ep4">
+    <div class="ep-card">
+      <div class="ep-number">Capítulo 04 / 04</div>
+      <div class="ep-title">Consumo Activo e Investigación</div>
+      <div class="ep-age-badge">🔍 Metodología Activa</div>
+      <p class="ep-desc">Cómo usar las redes sociales como motores de búsqueda y herramientas para documentar procesos de aprendizaje.</p>
+      <div class="ep-tiktok-desc">
+        <div class="ep-tiktok-desc-label">Reflexión Docente</div>
+        <p>Si los estudiantes van a invertir 2 horas al día en la plataforma, enseñémosles a "entrenar" a su algoritmo para que les muestre ciencia, arte e historia.</p>
+      </div>
+    </div>
+
+    <div class="ep-slides">
+
+      <div class="slide-item">
+        <div class="slide-left">
+          <div class="slide-number-row"><span class="slide-num">01</span><span class="slide-role">Herramienta</span></div>
+          <div class="slide-title">El "Nuevo Google"</div>
+          <div class="slide-content"><ul><li>La Generación Z utiliza la barra de búsqueda de TikTok más que los buscadores web.</li><li>Manda tareas donde la investigación empiece en la red social pero termine en fuentes académicas.</li><li>Ej: "Busca 3 videos sobre la Revolución Industrial y contrasta sus datos con el libro de texto".</li></ul></div>
+        </div>
+        <div class="slide-visual">
+          <div class="visual-mockup" style="background: linear-gradient(135deg, #7c4dff22, #7c4dff08); border: 1px solid rgba(124,77,255,0.2);">
+            <div class="visual-label">Tendencia</div>
+            <div class="visual-headline">EL MOTOR DE BÚSQUEDA GEN-Z</div>
+            <div class="visual-sub">Entendiendo cómo buscan respuestas las nuevas generaciones.</div>
+            <div class="visual-deco">📱</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-item">
+        <div class="slide-left">
+          <div class="slide-number-row"><span class="slide-num">02</span><span class="slide-role">Evaluación</span></div>
+          <div class="slide-title">Síntesis Extrema</div>
+          <div class="slide-content"><ul><li>En lugar de un ensayo de 5 páginas, pide a los alumnos que escriban un guion para explicar el tema en 60 segundos.</li><li>Esta "síntesis extrema" obliga a comprender el tema a profundidad para poder resumirlo.</li><li>No necesitan grabarlo ni publicarlo, el ejercicio cognitivo está en el proceso de selección y redacción.</li></ul></div>
+        </div>
+        <div class="slide-visual">
+          <div class="visual-mockup" style="background: linear-gradient(135deg, #7c4dff15, #1a1a26); border: 1px solid rgba(124,77,255,0.15);">
+            <div class="visual-label">Evaluación</div>
+            <div class="visual-headline">SÍNTESIS EN 60 SEGUNDOS</div>
+            <div class="visual-sub">Si no puedes explicarlo rápido, no lo has entendido bien.</div>
+            <div class="visual-deco">✍️</div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
